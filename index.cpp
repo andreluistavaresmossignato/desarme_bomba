@@ -119,13 +119,13 @@ void iniciarFase() {
     lcd.setCursor(0, 1);
     lcd.print("aviao? Desarme!");
   } else if (fase == 2) {
-    lcd.print("Algo acelerou!");
+    lcd.print("Dinamites nesse");
     lcd.setCursor(0, 1);
-    lcd.print("Digite a senha!");
+    lcd.print("banco? Evacue!");
   } else if (fase == 3) {
-    lcd.print("Ultima chance!");
+    lcd.print("Bomba nuclear!");
     lcd.setCursor(0, 1);
-    lcd.print("Rapido!");
+    lcd.print("Desarme ja!");
   }
   delay(2000);  // Espera 2 segundos
 
