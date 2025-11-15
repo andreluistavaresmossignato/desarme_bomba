@@ -33,6 +33,7 @@ void setup() {
   lcd.init();
   lcd.backlight();
   pinMode(buzzerPin, OUTPUT);
+  digitalWrite(buzzerPin, LOW); // garante o buzzer desligado no início
   randomSeed(analogRead(A1)); // semente aleatória
 
   // Define os LEDs como saída e garante que começam apagados
@@ -41,7 +42,7 @@ void setup() {
     digitalWrite(ledPins[i], LOW);
   }
 
-  Serial.println("=== Simulador (modo TEST) ===");
+  Serial.println("=== Simulador (modo TESTE) ===");
   iniciarFase();
 }
 
@@ -109,6 +110,7 @@ void loop() {
 
 void iniciarFase() {
   // Mensagem de introdução antes da fase
+  digitalWrite(buzzerPin, LOW);  
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Ha bombas nesse");
@@ -193,7 +195,6 @@ void verificarTentativa() {
     lcd.print("Correto!");
     lcd.setCursor(0, 1);
     lcd.print("Aperte #");
-    tone(buzzerPin, 1000, 200);
     faseVencida = true;
     Serial.println("Fase vencida. Aperte # para ir pra proxima.");
   } else {
@@ -204,7 +205,6 @@ void verificarTentativa() {
     lcd.setCursor(0, 1);
     lcd.print(foraLugar);
     lcd.print(" fora pos");
-    tone(buzzerPin, 300, 200);
     delay(1200);
     // limpa tentativa e apaga LEDs (já apagados para posições incorretas, mas garantimos)
     tentativa = "";
@@ -243,16 +243,19 @@ void explodirBomba() {
   Serial.println(">>> EXPLODIU! (tempo esgotado)");
   for (int i = 0; i < 6; i++) {
     tone(buzzerPin, 200 + i * 100);
-    // pisca todos os LEDs para dramatizar
     for (int j = 0; j < tamanhoSenha; j++) {
-      digitalWrite(ledPins[j], (i % 2 == 0) ? HIGH : LOW);
+      digitalWrite(ledPins[j], HIGH); // LED sempre aceso durante o apito
     }
-    delay(200);
+    delay(400); // dobra o tempo de apito
+    noTone(buzzerPin); 
+    apagarTodosLeds(); 
+    delay(100); // breve pausa entre apitos
   }
-  noTone(buzzerPin);
-  // garante todos LEDs apagados após efeito
-  apagarTodosLeds();
-  perdeu = true;
+
+    noTone(buzzerPin);
+    // garante todos LEDs apagados após efeito
+    apagarTodosLeds();
+    perdeu = true;
 }
 
 void apagarTodosLeds() {
