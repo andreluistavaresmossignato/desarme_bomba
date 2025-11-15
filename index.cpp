@@ -113,9 +113,20 @@ void iniciarFase() {
   digitalWrite(buzzerPin, LOW);  
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Ha bombas nesse");
-  lcd.setCursor(0, 1);
-  lcd.print("aviao? Desarme!");
+  // Fases diferentes, mensagens diferentes
+  if (fase == 1) {
+    lcd.print("Ha bombas nesse");
+    lcd.setCursor(0, 1);
+    lcd.print("aviao? Desarme!");
+  } else if (fase == 2) {
+    lcd.print("Algo acelerou!");
+    lcd.setCursor(0, 1);
+    lcd.print("Digite a senha!");
+  } else if (fase == 3) {
+    lcd.print("Ultima chance!");
+    lcd.setCursor(0, 1);
+    lcd.print("Rapido!");
+  }
   delay(2000);  // Espera 2 segundos
 
   // Mostra o número da fase
@@ -192,9 +203,9 @@ void verificarTentativa() {
   if (correto) {
     lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("Correto!");
+    lcd.print("Correto!Aperte #");
     lcd.setCursor(0, 1);
-    lcd.print("Aperte #");
+    lcd.print("");
     faseVencida = true;
     Serial.println("Fase vencida. Aperte # para ir pra proxima.");
   } else {
@@ -205,7 +216,7 @@ void verificarTentativa() {
     lcd.setCursor(0, 1);
     lcd.print(foraLugar);
     lcd.print(" fora pos");
-    delay(1200);
+    delay(1000);
     // limpa tentativa e apaga LEDs (já apagados para posições incorretas, mas garantimos)
     tentativa = "";
     apagarTodosLeds();
