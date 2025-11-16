@@ -42,7 +42,7 @@ void setup() {
     digitalWrite(ledPins[i], LOW);
   }
 
-  Serial.println("=== Simulador (modo TESTE) ===");
+  Serial.println("=== Simulador (modo de testes) ===");
   iniciarFase();
 }
 
@@ -108,6 +108,7 @@ void loop() {
   }
 }
 
+// === FUNÇÕES INTELIGENTES ===
 void iniciarFase() {
   // Mensagem de introdução antes da fase
   digitalWrite(buzzerPin, LOW);  
