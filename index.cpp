@@ -2,6 +2,7 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
+// == Declaração dos componentes ==
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 const byte ROWS = 4;
@@ -20,6 +21,7 @@ const int buzzerPin = 11;
 const int ledPins[] = {10, 12, 13}; // Pinos para os LEDs (um por dígito)
 const int tamanhoSenha = sizeof(ledPins) / sizeof(ledPins[0]); // 3 aqui
 
+// == Variáveis do jogo ==
 int fase = 1;
 unsigned long inicioTempo;
 unsigned long tempoFases[] = {30000UL, 20000UL, 10000UL}; // milissegundos por fase
@@ -28,6 +30,7 @@ String tentativa = "";
 bool perdeu = false;
 bool faseVencida = false;
 
+// == Funções nativas ==
 void setup() {
   Serial.begin(9600); //  Serial para debug/testes
   lcd.init();
@@ -108,7 +111,7 @@ void loop() {
   }
 }
 
-// === FUNÇÕES INTELIGENTES ===
+// == Funções Inteligentes ==
 void iniciarFase() {
   // Mensagem de introdução antes da fase
   digitalWrite(buzzerPin, LOW);  
